@@ -52,7 +52,7 @@ const ChangeTable: FC = () => {
 					{changes
 						.filter((player) => allPlayers.some((id) => player.id === id))
 						.map((change) => {
-							const { id, name, metric, old } = change;
+							const { name, metric, old } = change;
 							return (
 								<tr>
 									<td>{new Date(change.date).toLocaleTimeString()}</td>
