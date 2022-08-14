@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import { MainContainer } from './app.styles';
+import Homepage from './routes/homepage/homepage.route';
+import League from './routes/league/league.route';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<MainContainer>
+			<Routes>
+				<Route path='/' element={<Homepage />}></Route>
+				<Route path='/:leagueID' element={<League />}></Route>
+			</Routes>
+		</MainContainer>
+	);
 }
 
 export default App;
