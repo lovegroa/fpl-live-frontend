@@ -25,7 +25,7 @@ const ChangeTable: FC = () => {
 
 	useEffect(() => {
 		const getData = async () => {
-			const { data } = await axios.get('/latest-changes/');
+			const { data } = await axios.get('https://fpllive.herokuapp.com/latest-changes/');
 			setChanges([...data]);
 		};
 		getData();

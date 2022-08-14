@@ -15,7 +15,10 @@ export const fetchFPLDataFailed = withMatcher((error: Error): FetchFPLDataFailed
 export const fetchFPLDataAsync = (leagueID: string) => async (dispatch: any) => {
 	dispatch(fetchFPLDataStart());
 	try {
-		Promise.all([axios.get(`/leagueID/${leagueID}`), axios.get(`/bootstrap-static/`)]).then(([league, bootstrapStatic]) => {
+		Promise.all([
+			axios.get(`https://fpllive.herokuapp.com/leagueID/${leagueID}`),
+			axios.get(`https://fpllive.herokuapp.com/bootstrap-static/`),
+		]).then(([league, bootstrapStatic]) => {
 			dispatch(fetchFPLDataSuccess({ league: league.data, bootstrapStatic: bootstrapStatic.data }));
 		});
 	} catch (error: any) {
