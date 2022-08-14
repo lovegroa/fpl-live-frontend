@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Action, ActionWithPayload, withMatcher, createAction } from '../../utils/reducer.utils';
-import { BootstrapStatic, FPLDataType, FPL_DATA_ACTION_TYPES, LeagueType } from './fpl-data.types';
+import { FPLDataType, FPL_DATA_ACTION_TYPES } from './fpl-data.types';
 
 export type FetchFPLDataStart = Action<FPL_DATA_ACTION_TYPES.FETCH_FPL_DATA_START>;
 export type FetchFPLDataSuccess = ActionWithPayload<FPL_DATA_ACTION_TYPES.FETCH_FPL_DATA_SUCCESS, FPLDataType>;

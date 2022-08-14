@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Textfit } from 'react-textfit';
 import ChangeTable from '../../components/changes/changes.component';
 import Navbar from '../../components/navbar/navbar.component';
 import { fetchFPLDataAsync } from '../../store/fpl-data/fpl-data.actions';
