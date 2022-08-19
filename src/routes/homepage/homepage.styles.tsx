@@ -23,7 +23,7 @@ export const Card = styled.div`
 	padding: 20px;
 	flex-direction: column;
 	margin-bottom: 20px;
-
+	height: '200px';
 	.no-wrap {
 		white-space: nowrap;
 	}

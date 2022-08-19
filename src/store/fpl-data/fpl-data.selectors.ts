@@ -5,6 +5,7 @@ import { FPLDataState } from './fpl-data.reducer';
 const selectFPLDataReducer = (state: RootState): FPLDataState => state.fplData;
 
 export const selectLeague = createSelector([selectFPLDataReducer], (fplDataSlice) => fplDataSlice.league);
+export const selectEntry = createSelector([selectFPLDataReducer], (fplDataSlice) => fplDataSlice.entry);
 export const selectPlayers = createSelector([selectFPLDataReducer], (fplDataSlice) => fplDataSlice.bootstrapStatic.elements);
 export const selectFPLDataIsLoading = createSelector([selectFPLDataReducer], (fplDataSlice) => fplDataSlice.isLoading);
 
@@ -17,6 +18,7 @@ type Pick = {
 };
 
 type Manager = {
+	entry: number;
 	managerName: string;
 	teamName: string;
 	totalPoints: number;
@@ -35,6 +37,7 @@ export const selectManagers = createSelector([selectLeague], (fplDataSlice) => {
 		id: fplDataSlice.league.id,
 		managers: fplDataSlice.standings.results.reduce<Manager[]>((acc, team) => {
 			acc.push({
+				entry: team.entry,
 				managerName: team.player_name,
 				teamName: team.entry_name,
 				totalPoints: team.total,

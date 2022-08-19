@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ChangeTableContainer = styled.div`
-	height: 300px;
+	height: 50%;
 	overflow-y: scroll;
 	width: 100%;
 

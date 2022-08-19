@@ -11,4 +11,9 @@ export const NavbarContainer = styled.div`
 	align-items: center;
 	font-size: 5vh;
 	font-weight: bold;
+	padding: 20px;
+
+	.no-wrap {
+		white-space: nowrap;
+	}
 `;

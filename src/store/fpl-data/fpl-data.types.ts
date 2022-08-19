@@ -1,7 +1,13 @@
 export enum FPL_DATA_ACTION_TYPES {
-	FETCH_FPL_DATA_START = 'fplData/FETCH_FPL_DATA_START',
-	FETCH_FPL_DATA_SUCCESS = 'fplData/FETCH_FPL_DATA_SUCCESS',
-	FETCH_FPL_DATA_FAILED = 'fplData/FETCH_FPL_DATA_FAILED',
+	FETCH_BOOTSTRAP_STATIC_START = 'fplData/FETCH_BOOTSTRAP_STATIC_START',
+	FETCH_BOOTSTRAP_STATIC_SUCCESS = 'fplData/FETCH_BOOTSTRAP_STATIC_SUCCESS',
+	FETCH_BOOTSTRAP_STATIC_FAILED = 'fplData/FETCH_BOOTSTRAP_STATIC_FAILED',
+	FETCH_ENTRY_START = 'fplData/FETCH_ENTRY_START',
+	FETCH_ENTRY_SUCCESS = 'fplData/FETCH_ENTRY_SUCCESS',
+	FETCH_ENTRY_FAILED = 'fplData/FETCH_ENTRY_FAILED',
+	FETCH_LEAGUE_START = 'fplData/FETCH_LEAGUE_START',
+	FETCH_LEAGUE_SUCCESS = 'fplData/FETCH_LEAGUE_SUCCESS',
+	FETCH_LEAGUE_FAILED = 'fplData/FETCH_LEAGUE_FAILED',
 }
 
 export interface LeagueType {
@@ -252,7 +258,61 @@ export interface BootstrapStatic {
 	}[];
 }
 
-export type FPLDataType = {
-	league: LeagueType;
-	bootstrapStatic: BootstrapStatic;
-};
+export interface EntryType {
+	id: number;
+	joined_time: Date;
+	started_event: number;
+	favourite_team?: any;
+	player_first_name: string;
+	player_last_name: string;
+	player_region_id: number;
+	player_region_name: string;
+	player_region_iso_code_short: string;
+	player_region_iso_code_long: string;
+	summary_overall_points: number;
+	summary_overall_rank: number;
+	summary_event_points: number;
+	summary_event_rank: number;
+	current_event: number;
+	leagues: {
+		classic: {
+			id: number;
+			name: string;
+			short_name: string;
+			created: Date;
+			closed: boolean;
+			rank?: any;
+			max_entries?: any;
+			league_type: string;
+			scoring: string;
+			admin_entry?: number;
+			start_event: number;
+			entry_can_leave: boolean;
+			entry_can_admin: boolean;
+			entry_can_invite: boolean;
+			has_cup: boolean;
+			cup_league?: any;
+			cup_qualified?: any;
+			entry_rank: number;
+			entry_last_rank: number;
+		}[];
+		h2h: any[];
+		cup: {
+			matches: any[];
+			status: {
+				qualification_event?: any;
+				qualification_numbers?: any;
+				qualification_rank?: any;
+				qualification_state?: any;
+			};
+			cup_league?: any;
+		};
+		cup_matches: any[];
+	};
+	name: string;
+	name_change_blocked: boolean;
+	kit?: any;
+	last_deadline_bank: number;
+	last_deadline_value: number;
+	last_deadline_total_transfers: number;
+}

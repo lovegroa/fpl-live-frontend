@@ -35,6 +35,8 @@ const ChangeTable: FC = () => {
 		}, 1000 * 60);
 	}, []);
 
+	let previousDate: string;
+
 	return (
 		<ChangeTableContainer>
 			<table>
@@ -51,18 +53,45 @@ const ChangeTable: FC = () => {
 				<tbody>
 					{changes
 						.filter((player) => allPlayers.some((id) => player.id === id))
-						.map((change) => {
+						.map((change, index) => {
 							const { name, metric, old } = change;
-							return (
-								<tr>
-									<td>{new Date(change.date).toLocaleTimeString()}</td>
-									{/* <td>{id}</td> */}
-									<td>{name}</td>
-									<td>{metric}</td>
-									<td>{old}</td>
-									<td>{change.new}</td>
-								</tr>
-							);
+							const date = new Date(change.date);
+
+							if (index === 0) {
+								previousDate = date.toDateString();
+							}
+
+							if (date.toDateString() !== previousDate || index === 0) {
+								console.log(index);
+								previousDate = date.toDateString();
+
+								return (
+									<>
+										<tr>
+											<td colSpan={5}>{date.toDateString()}</td>
+										</tr>
+										<tr>
+											<td>{date.toLocaleTimeString()}</td>
+											{/* <td>{id}</td> */}
+											<td>{name}</td>
+											<td>{metric}</td>
+											<td>{old}</td>
+											<td>{change.new}</td>
+										</tr>
+									</>
+								);
+							} else {
+								return (
+									<tr>
+										<td>{date.toLocaleTimeString()}</td>
+										{/* <td>{id}</td> */}
+										<td>{name}</td>
+										<td>{metric}</td>
+										<td>{old}</td>
+										<td>{change.new}</td>
+									</tr>
+								);
+							}
 						})}
 				</tbody>
 			</table>

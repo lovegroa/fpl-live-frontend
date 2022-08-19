@@ -1,9 +1,20 @@
 import { AnyAction } from 'redux';
-import { fetchFPLDataFailed, fetchFPLDataStart, fetchFPLDataSuccess } from './fpl-data.actions';
-import { BootstrapStatic, LeagueType } from './fpl-data.types';
+import {
+	fetchBootstrapStaticFailed,
+	fetchBootstrapStaticStart,
+	fetchBootstrapStaticSuccess,
+	fetchLeagueFailed,
+	fetchLeagueStart,
+	fetchLeagueSuccess,
+	fetchEntryFailed,
+	fetchEntryStart,
+	fetchEntrySuccess,
+} from './fpl-data.actions';
+import { BootstrapStatic, LeagueType, EntryType } from './fpl-data.types';
 
 export type FPLDataState = {
 	readonly league: LeagueType;
+	readonly entry: EntryType;
 	readonly bootstrapStatic: BootstrapStatic;
 	readonly isLoading: boolean;
 	readonly error: Error | null;
@@ -77,19 +88,74 @@ export const FPL_DATA_INITIAL_STATE: FPLDataState = {
 		element_stats: [],
 		element_types: [],
 	},
+	entry: {
+		id: -1,
+		joined_time: new Date(),
+		started_event: -1,
+		favourite_team: null,
+		player_first_name: '',
+		player_last_name: '',
+		player_region_id: -1,
+		player_region_name: '',
+		player_region_iso_code_short: '',
+		player_region_iso_code_long: '',
+		summary_overall_points: -1,
+		summary_overall_rank: -1,
+		summary_event_points: -1,
+		summary_event_rank: -1,
+		current_event: -1,
+		leagues: {
+			classic: [],
+			h2h: [],
+			cup: {
+				matches: [],
+				status: {
+					qualification_event: null,
+					qualification_numbers: null,
+					qualification_rank: null,
+					qualification_state: null,
+				},
+				cup_league: null,
+			},
+			cup_matches: [],
+		},
+		name: '',
+		name_change_blocked: false,
+		kit: null,
+		last_deadline_bank: -1,
+		last_deadline_value: -1,
+		last_deadline_total_transfers: -1,
+	},
 	isLoading: true,
 	error: null,
 };
 
 export const fplDataReducer = (state = FPL_DATA_INITIAL_STATE, action = {} as AnyAction): FPLDataState => {
-	if (fetchFPLDataStart.match(action)) {
+	if (fetchBootstrapStaticStart.match(action)) {
 		return { ...state, isLoading: true };
 	}
-
-	if (fetchFPLDataSuccess.match(action)) {
-		return { ...state, isLoading: false, league: action.payload.league, bootstrapStatic: action.payload.bootstrapStatic };
+	if (fetchBootstrapStaticSuccess.match(action)) {
+		return { ...state, isLoading: false, bootstrapStatic: action.payload };
 	}
-	if (fetchFPLDataFailed.match(action)) {
+	if (fetchBootstrapStaticFailed.match(action)) {
+		return { ...state, isLoading: false, error: action.payload };
+	}
+	if (fetchLeagueStart.match(action)) {
+		return { ...state, isLoading: true };
+	}
+	if (fetchLeagueSuccess.match(action)) {
+		return { ...state, isLoading: false, league: action.payload };
+	}
+	if (fetchLeagueFailed.match(action)) {
+		return { ...state, isLoading: false, error: action.payload };
+	}
+	if (fetchEntryStart.match(action)) {
+		return { ...state, isLoading: true };
+	}
+	if (fetchEntrySuccess.match(action)) {
+		return { ...state, isLoading: false, entry: action.payload };
+	}
+	if (fetchEntryFailed.match(action)) {
 		return { ...state, isLoading: false, error: action.payload };
 	}
 
