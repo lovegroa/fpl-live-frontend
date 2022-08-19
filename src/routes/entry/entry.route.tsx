@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
-import { Link } from 'react-router-dom';
 import LoaderEllipsis from '../../components/loader-ellipsis/loader-ellipsis.component';
 import Navbar from '../../components/navbar/navbar.component';
 import Table from '../../components/table/table.component';
