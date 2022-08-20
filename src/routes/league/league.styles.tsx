@@ -1,7 +1,31 @@
 import styled from 'styled-components';
 
 export const LeagueTable = styled.div`
-	height: 300px;
+	overflow: auto;
+	height: 50%;
 	width: 100%;
-	margin-bottom: 20px;
+
+	.captain {
+		td {
+			background-color: yellow;
+			color: black;
+		}
+	}
+
+	.vice-captain {
+		background-color: orange;
+
+		td {
+			background-color: orange;
+			color: black;
+		}
+	}
+	.sub {
+		background-color: red;
+
+		td {
+			background-color: red;
+			color: white;
+		}
+	}
 `;

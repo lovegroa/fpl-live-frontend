@@ -6,11 +6,12 @@ import LoaderEllipsis from '../../components/loader-ellipsis/loader-ellipsis.com
 import Navbar from '../../components/navbar/navbar.component';
 import Table from '../../components/table/table.component';
 import { fetchLeagueAsync } from '../../store/fpl-data/fpl-data.actions';
-import { selectFPLDataIsLoading, selectManagers, selectPlayers } from '../../store/fpl-data/fpl-data.selectors';
+import { selectFPLDataIsLoading, selectGameweek, selectManagers, selectPlayers } from '../../store/fpl-data/fpl-data.selectors';
 import { Container } from '../homepage/homepage.styles';
 import Share from '../../assets/share.svg';
 import Expand from '../../assets/expand.svg';
 import { Textfit } from 'react-textfit';
+import { LeagueTable } from './league.styles';
 
 export const League = () => {
 	const { leagueID } = useParams();
@@ -18,6 +19,7 @@ export const League = () => {
 	const leagueData = useSelector(selectManagers);
 	const playerData = useSelector(selectPlayers);
 	const isLoading = useSelector(selectFPLDataIsLoading);
+	const gameweekNo = useSelector(selectGameweek);
 	const [shared, setShared] = useState(false);
 	const [sharedName, setsharedName] = useState('');
 
@@ -80,7 +82,8 @@ export const League = () => {
 						</Textfit>{' '}
 					</Navbar>
 					<Container>
-						<div style={{ overflow: 'auto', height: '50%', width: '100%' }}>
+						{gameweekNo}
+						<LeagueTable>
 							<Table>
 								<thead>
 									<tr>
@@ -156,26 +159,31 @@ export const League = () => {
 												const mod = index % 2 === 0 ? 'even' : 'odd';
 												const first = index2 === 0 ? 'first' : '';
 												const last = index2 === manager.picks.length - 1 ? 'last' : '';
+												const captain = manager.picks[index2].is_captain ? 'captain' : '';
+												const viceCaptain = manager.picks[index2].is_vice_captain ? 'vice-captain' : '';
+												const sub = index2 > 10 && 'sub';
+												const classes = `small ${mod} ${first} ${last} ${captain} ${viceCaptain} ${sub}`;
 
 												return player ? (
-													<tr
-														className={open[index] ? `small ${mod} ${first} ${last}` : `small ${mod} ${first} ${last}`}
-														id={`row-${index}`}
-													>
+													<tr className={open[index] ? `open ${classes}` : `closed ${classes}`} id={`row-${index}`}>
 														<td>
-															<div className={`small ${open[index] ? 'open' : 'closed'}`}></div>
+															<div></div>
 														</td>
 														<td>
-															<div className={`small ${open[index] ? 'open' : 'closed'}`}> {player.web_name}</div>
+															<div> {player.web_name}</div>
 														</td>
 														<td>
-															<div className={`small ${open[index] ? 'open' : 'closed'}`}> {player.event_points}</div>
+															<div> {player.event_points}</div>
 														</td>
 														<td>
-															<div className={`small ${open[index] ? 'open' : 'closed'}`}> {player.total_points}</div>
+															<div> {player.total_points}</div>
 														</td>
 														<td>
-															<div className={`small ${open[index] ? 'open' : 'closed'}`}></div>
+															<div>
+																{captain && 'C'}
+																{viceCaptain && 'VC'}
+																{sub && 'S'}
+															</div>
 														</td>
 													</tr>
 												) : (
@@ -186,7 +194,7 @@ export const League = () => {
 									</>
 								))}
 							</Table>
-						</div>
+						</LeagueTable>
 						<div style={{ height: '20px' }}></div>
 						<ChangeTable />
 					</Container>

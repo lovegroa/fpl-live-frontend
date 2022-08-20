@@ -53,3 +53,14 @@ export const selectManagers = createSelector([selectLeague], (fplDataSlice) => {
 
 	return league;
 });
+
+export const selectGameweek = createSelector([selectFPLDataReducer], (fplDataSlice) => {
+	const { bootstrapStatic } = fplDataSlice;
+
+	return bootstrapStatic.events.reduce((acc, event) => {
+		if (event.is_current) {
+			acc = event.id;
+		}
+		return acc;
+	}, 0);
+});
