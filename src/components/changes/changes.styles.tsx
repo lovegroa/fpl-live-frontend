@@ -6,7 +6,7 @@ export const ChangeTableContainer = styled.ul`
 	font-family: monospace;
 	padding: 5px;
 	width: 100%;
-	height: 50%;
+	flex: 1 1 50%;
 	list-style-type: none; /* Remove bullets */
 	margin: 0; /* Remove margins */
 	overflow-y: scroll;

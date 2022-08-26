@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const LeagueTable = styled.div`
 	overflow: auto;
-	height: 50%;
 	width: 100%;
+	/* flex: 0 0 50%; */
+	max-height: 50%;
 
 	.captain {
 		td {
