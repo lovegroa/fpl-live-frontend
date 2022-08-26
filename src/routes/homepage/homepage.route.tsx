@@ -2,9 +2,13 @@ import { FormEvent, ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Container, CleanForm } from './homepage.styles';
 import Navbar from '../../components/navbar/navbar.component';
+import { SavedEntry } from '../../store/fpl-data/fpl-data.types';
+import Table from '../../components/table/table.component';
 const Homepage = () => {
 	const [entryID, setEntryID] = useState('');
 	const navigate = useNavigate();
+	const entries = window.localStorage.getItem(`entries`);
+	const parsedEntries: SavedEntry[] = entries ? JSON.parse(entries) : [];
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
 		event.preventDefault();
@@ -26,6 +30,33 @@ const Homepage = () => {
 					<input onChange={inputHandler}></input>
 					<button type='submit'>Continue</button>
 				</CleanForm>
+				<br />
+				{entries?.length ? (
+					<Table>
+						<thead>
+							<tr>
+								<th>Recently Viewed</th>
+							</tr>
+						</thead>
+						<tbody>
+							{parsedEntries.map((entry, index) => (
+								<tr
+									onClick={() => {
+										navigate(`/entry/${entry.id}`);
+									}}
+									className={index % 2 === 0 ? 'odd hover' : 'even hover'}
+									key={index}
+								>
+									<td>
+										{entry.firstName} {entry.lastName}
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</Table>
+				) : (
+					<></>
+				)}
 			</Container>
 		</>
 	);

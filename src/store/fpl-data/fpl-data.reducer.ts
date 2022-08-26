@@ -9,13 +9,16 @@ import {
 	fetchEntryFailed,
 	fetchEntryStart,
 	fetchEntrySuccess,
+	fetchLatestChangesSuccess,
+	fetchLatestChangesFailed,
 } from './fpl-data.actions';
-import { BootstrapStatic, LeagueType, EntryType } from './fpl-data.types';
+import { BootstrapStatic, LeagueType, EntryType, LatestChange } from './fpl-data.types';
 
 export type FPLDataState = {
 	readonly league: LeagueType;
 	readonly entry: EntryType;
 	readonly bootstrapStatic: BootstrapStatic;
+	readonly latestChanges: LatestChange[];
 	readonly isLoading: boolean;
 	readonly error: Error | null;
 };
@@ -126,6 +129,7 @@ export const FPL_DATA_INITIAL_STATE: FPLDataState = {
 		last_deadline_value: -1,
 		last_deadline_total_transfers: -1,
 	},
+	latestChanges: [],
 	isLoading: true,
 	error: null,
 };
@@ -157,6 +161,12 @@ export const fplDataReducer = (state = FPL_DATA_INITIAL_STATE, action = {} as An
 	}
 	if (fetchEntryFailed.match(action)) {
 		return { ...state, isLoading: false, error: action.payload };
+	}
+	if (fetchLatestChangesSuccess.match(action)) {
+		return { ...state, latestChanges: action.payload };
+	}
+	if (fetchLatestChangesFailed.match(action)) {
+		return { ...state, error: action.payload };
 	}
 
 	return state;

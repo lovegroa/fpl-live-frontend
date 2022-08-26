@@ -8,6 +8,8 @@ export enum FPL_DATA_ACTION_TYPES {
 	FETCH_LEAGUE_START = 'fplData/FETCH_LEAGUE_START',
 	FETCH_LEAGUE_SUCCESS = 'fplData/FETCH_LEAGUE_SUCCESS',
 	FETCH_LEAGUE_FAILED = 'fplData/FETCH_LEAGUE_FAILED',
+	FETCH_LATEST_CHANGES_SUCCESS = 'fplData/FETCH_LATEST_CHANGES_SUCCESS',
+	FETCH_LATEST_CHANGES_FAILED = 'fplData/FETCH_LATEST_CHANGES_FAILED',
 }
 
 export interface LeagueType {
@@ -316,3 +318,18 @@ export interface EntryType {
 	last_deadline_value: number;
 	last_deadline_total_transfers: number;
 }
+
+export interface LatestChange {
+	date: string;
+	id: number;
+	name: string;
+	metric: string;
+	old: number;
+	new: number;
+}
+
+export type SavedEntry = {
+	id: number;
+	firstName: string;
+	lastName: string;
+};

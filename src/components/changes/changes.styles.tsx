@@ -1,44 +1,76 @@
 import styled from 'styled-components';
 
-export const ChangeTableContainer = styled.div`
-	height: 50%;
-	overflow-y: scroll;
+export const ChangeTableContainer = styled.ul`
+	background-color: black;
+	color: white;
+	font-family: monospace;
+	padding: 5px;
 	width: 100%;
+	height: 50%;
+	list-style-type: none; /* Remove bullets */
+	margin: 0; /* Remove margins */
+	overflow-y: scroll;
 
-	table {
+	.date {
+		text-align: left;
 		width: 100%;
-		border-spacing: 0;
+		font-weight: bolder;
+		font-size: larger;
+		color: yellow;
 	}
 
-	thead {
-		background-color: #2c2c2c;
-		width: 100%;
-		color: white;
-		border: none;
+	.good {
+		color: limegreen;
+	}
 
-		th {
-			padding: 10px;
+	.bad {
+		color: red;
+	}
+
+	.gameweek {
+		font-weight: 900;
+		font-size: xx-large;
+		text-align: left;
+		background-color: white;
+		color: black;
+		display: flex;
+		justify-content: space-around;
+
+		button {
+			background: none;
+			color: inherit;
 			border: none;
-			text-align: center;
+			padding: 0 5px;
+			margin: 5px;
+			font: inherit;
+			cursor: pointer;
+			outline: inherit;
+			font-size: medium;
+			border: 1px solid black;
 		}
 	}
 
-	tbody {
-		background-color: black;
+	.time {
+		text-align: left;
+		width: 100%;
+		font-weight: bold;
+		/* font-size: large; */
+		color: orange;
+	}
 
-		tr {
-			background-color: black;
-			height: 40px;
-		}
-
-		td {
-			font-size: 80%;
-			text-align: center;
-			color: white;
-		}
+	.details {
+		padding: 0px 40px;
+		white-space: normal;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
 	}
 
 	.hide {
 		display: none;
+	}
+
+	.nowrap {
+		/* white-space: nowrap; */
 	}
 `;
