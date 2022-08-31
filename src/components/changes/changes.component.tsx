@@ -23,6 +23,7 @@ const ChangeTable: FC = () => {
 				newPoints: number;
 				delta: number;
 				changes: { change: string; oldValue: number; newValue: number; delta: number }[];
+				playStatus: 0 | 1 | 2;
 			}[];
 		}[];
 	}[];
@@ -79,10 +80,19 @@ const ChangeTable: FC = () => {
 
 			let delta = newPoints - oldPoints;
 
+			const tempChangePlayStatus = latestChanges.filter(({ id, metric }) => change.id === id && metric === 'playStatus');
+			const tempChangeMinutes = latestChanges.filter(({ id, metric }) => change.id === id && metric === 'minutes');
+
+			let playStatus: 0 | 1 | 2 = 0;
+
+			if (tempChangePlayStatus.length) {
+				tempChangeMinutes.length ? (playStatus = 1) : (playStatus = 2);
+			}
+
 			//find or create player
 
 			if (!changesByTime.filter((item3) => item3.id === change.id).length) {
-				changesByTime.push({ id: change.id, name: change.name, oldPoints, newPoints, delta, changes: [] });
+				changesByTime.push({ id: change.id, name: change.name, oldPoints, newPoints, delta, changes: [], playStatus });
 			}
 
 			const changesByID = changesByTime.filter((item3) => item3.id === change.id)[0].changes;
@@ -134,14 +144,27 @@ const ChangeTable: FC = () => {
 										<li className='time' key={index2}>
 											{time}
 										</li>
-										{changesByID.map(({ id, changes, delta, name, newPoints, oldPoints }, index3) => (
+										{changesByID.map(({ id, changes, delta, name, newPoints, playStatus }, index3) => (
 											<>
-												<li>
-													<strong>
-														{name}: {newPoints} {newPoints === 1 ? 'point' : 'points'}
-														<span className={delta > 0 ? 'good' : 'bad'}> ({delta > 0 ? `+${delta}` : `${delta}`})</span>
-													</strong>
-												</li>
+												{console.table(changesByID)}
+												{playStatus !== 2 ? (
+													<li>
+														<strong>
+															{name}: {newPoints} {newPoints === 1 ? 'point' : 'points'}
+															<span className={delta > 0 ? 'good' : 'bad'}>
+																{' '}
+																({delta > 0 ? `+${delta}` : `${delta}`})
+															</span>
+														</strong>
+													</li>
+												) : (
+													<li>
+														<span className={'bad'}>
+															<strong>{name}: DID NOT START</strong>
+														</span>
+													</li>
+												)}
+
 												<li className={`details ${showDetails ? '' : 'hide'}`}>
 													<span>
 														{((picks.filter((pick) => pick.id === id).length / managers.length) * 100).toFixed(0)}% owned{' '}
@@ -156,11 +179,13 @@ const ChangeTable: FC = () => {
 												</li>
 												<li className={`details ${showDetails ? '' : 'hide'}`}>
 													{' '}
-													{changes.map(({ change, delta }) => (
-														<span className='nowrap'>
-															{change} ({delta > 0 ? `+${delta}` : `${delta}`}){' '}
-														</span>
-													))}
+													{changes
+														.filter((change) => change.change !== 'playStatus')
+														.map(({ change, delta }) => (
+															<span className='nowrap'>
+																{change} ({delta > 0 ? `+${delta}` : `${delta}`}){' '}
+															</span>
+														))}
 												</li>
 											</>
 										))}
